@@ -10,7 +10,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodeserver.js",
+    "start": "node server.js",
     "live": "nodemon server.js"
   },
   "author": "",
