@@ -23,7 +23,9 @@ const getMovieDetails = async (query, response_body, response) => {
     res.data.results.forEach((result) => {
       response_body.movies.push({
         title: result.title,
-        poster_path: 'http://image.tmdb.org/t/p/w500' + result.poster_path,
+        poster_path: result.poster_path
+          ? `http://image.tmdb.org/t/p/w500${result.poster_path}`
+          : '',
       });
     });
   } catch (err) {
@@ -35,7 +37,7 @@ const getMovieDetails = async (query, response_body, response) => {
 // Routing
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Poster ENDPOINT
+// Movie details ENDPOINT
 app.get('/search/movie', function (req, res) {
   console.log('Searching for movie', req.query.query);
   response = {
