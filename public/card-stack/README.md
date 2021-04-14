@@ -2,12 +2,14 @@
 
 ## How to run
 
+If you are already running RecNChill with `npm run dev` or `npm start` then simply go `localhost:3000/card-stack/`. Otherwise,
+
 Install `browser-sync` to run local server
 ```bash
 npm install -g browser-sync
 ```
 
-Then run the following command from the dir `/RecNChill/experiments/card-stack/`
+Then run the following command from the dir `/RecNChill/public/card-stack/`
 ```bash
 ❯ browser-sync start -s
 [Browsersync] Access URLs:
