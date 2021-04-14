@@ -144,3 +144,8 @@ let getRandomColor = () => {
   return '#' + Math.floor(Math.random() * 0xffffff).toString(16);
 };
 
+let getRandomRoom = () => {
+  let min = 10000;
+  let max = 99999;
+  return Math.floor(Math.random() * (max - min) + min).toString();
+};

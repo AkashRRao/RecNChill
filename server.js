@@ -56,39 +56,67 @@ app.get('/search/movie', function (req, res) {
 
 // Chatroom
 
-let members = new Map();
+let roomToMembers = new Map();
+let socketIdToRoom = new Map();
 
 io.on('connection', (socket) => {
   // when a user joins the room.
-  socket.on('join room', ({ name, color }) => {
+  socket.on('join room', ({ name, room, color }) => {
+    console.log(`${socket.id} joined the room (${room})`);
+    socket.join(room);
+    if (!roomToMembers.has(room)) {
+      // new room
+      roomToMembers.set(room, new Map());
+    }
+
+    let members = roomToMembers.get(room);
+    socketIdToRoom.set(socket.id, room);
+
     const data = {
       id: socket.id,
       name: name,
       color: color,
+      room: room,
       admin: members.size === 0 ? true : false,
     };
+
     members.set(socket.id, data);
+
     // emit their information and the members in the room.
     socket.emit('room joined', data, Array.from(members.entries()));
     // emit to other users that new user has joined.
-    socket.broadcast.emit('user joined', data, Array.from(members.entries()));
+    socket.broadcast
+      .to(room)
+      .emit('user joined', data, Array.from(members.entries()));
   });
 
   // when user leaves the room.
   socket.on('disconnect', () => {
+    const room = socketIdToRoom.get(socket.id);
+
+    if (!room) {
+      return;
+    }
+
+    console.log(`${socket.id} disconnect and left the room (${room})`);
+    let members = roomToMembers.get(room);
     const deletedUser = members.get(socket.id);
+
     members.delete(socket.id);
+    socketIdToRoom.delete(socket.id);
+
     if (members.size > 0) {
+      // TODO: fix ugly way to get next admin.
       const newAdmin = members.entries().next().value[0];
       members.get(newAdmin).admin = true;
       // emit to new admin that they're admin.
       socket.to(newAdmin).emit('new admin', Array.from(members.entries()));
       // emit to other users that user has left.
-      socket.broadcast.emit(
-        'user left',
-        deletedUser,
-        Array.from(members.entries())
-      );
+      socket.broadcast
+        .to(room)
+        .emit('user left', deletedUser, Array.from(members.entries()));
+    } else {
+      roomToMembers.delete(room);
     }
   });
 });
