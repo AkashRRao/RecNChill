@@ -5,5 +5,6 @@
 To run the app use,
 
 ```
+$ npm i
 $ npm run dev
 ```
