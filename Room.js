@@ -7,6 +7,8 @@ const roomState = {
   SHOW_MOVIES: 'SHOW_MOVIES',
 };
 
+const PYTHON_SERVER_HOSTNAME = 'http://localhost:8000'
+
 let socketIdToRoom = new Map();
 let nameToRoom = new Map();
 let io = null;
@@ -121,7 +123,7 @@ module.exports = class Room {
     }
 
     let result = await axios.get(
-      `https://recnchill-python.herokuapp.com/initial-feedback/`
+      `${PYTHON_SERVER_HOSTNAME}/initial-feedback/`
     );
     result = result.data;
 
@@ -129,7 +131,7 @@ module.exports = class Room {
     await Promise.all(
       result.movies.map(async (movie) => {
         const movieDetails = await getMovieFromTmdbId(movie.tmdbId);
-        movieData.push(movieDetails);
+        if (Object.keys(movieDetails).length) movieData.push(movieDetails);
       })
     );
 
@@ -153,12 +155,16 @@ module.exports = class Room {
 
     if (feedback.moviesLiked && feedback.moviesDisliked) {
       this.feedback.set(socket.id, feedback);
+      io.to(this.admin).emit(
+        'feedback update',
+        Object.fromEntries(this.feedback)
+      );
     }
 
     if (this.feedback.size === this.members.size) {
       // everyone has submitted their feedback
       let result = await axios.post(
-        `https://recnchill-python.herokuapp.com/get-recommendations/`,
+        `${PYTHON_SERVER_HOSTNAME}/get-recommendations/`,
         Object.fromEntries(this.feedback)
       );
 
@@ -167,7 +173,7 @@ module.exports = class Room {
       await Promise.all(
         result.movies.map(async (movie) => {
           const movieDetails = await getMovieFromTmdbId(movie.tmdbId);
-          movieData.push(movieDetails);
+          if (Object.keys(movieDetails).length) movieData.push(movieDetails);
         })
       );
       this.state = roomState.SHOW_MOVIES;

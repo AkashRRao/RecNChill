@@ -8,7 +8,7 @@ const getMoviesFromQuery = async (query) => {
     );
     result = result.data;
   } catch (error) {
-    result = { error: error };
+    console.log(error);
   }
   return result;
 };
@@ -21,7 +21,7 @@ const getMovieFromTmdbId = async (id) => {
     );
     result = result.data;
   } catch (error) {
-    result = { error: error };
+    console.log(error);
   }
   return result;
 };
