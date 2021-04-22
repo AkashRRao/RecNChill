@@ -8,28 +8,25 @@ let cards = new Set();
 
 function submitMovieFeedback() {
   cards.forEach((card) => card.destroy());
-  console.log(`user ${feedbackData.userId} has submitted movie feedback`);
-  console.log(
-    `here are the movies liked ${Array.from(feedbackData.moviesLiked)}`
+  feedbackData.moviesLiked = Array.from(feedbackData.moviesLiked).map((id) =>
+    Number(id)
   );
-  console.log(
-    `and here are the movies disliked ${Array.from(
-      feedbackData.moviesDisliked
-    )}`
-  );
+  feedbackData.moviesDisliked = Array.from(
+    feedbackData.moviesDisliked
+  ).map((id) => Number(id));
+  socket.emit('submit feedback', feedbackData);
   let submitDiv = document.getElementById('submit-feedback');
   submitDiv.querySelector('button').innerText = 'Loading...';
   submitDiv.querySelector('button').disabled = true;
-  alert('check console');
 }
 
 document.addEventListener('DOMContentLoaded', function () {
   var Direction = window.swing.Direction;
 
   const config = {
-    minThrowOutDistance: window.innerWidth / 3,
-    maxThrowOutDistance: window.innerWidth / 3 + 20,
-    maxRotation: window.innerWidth / 200,
+    minThrowOutDistance: window.innerWidth / 6,
+    maxThrowOutDistance: window.innerWidth / 6 + 20,
+    maxRotation: window.innerWidth / 600,
     allowedDirections: [Direction.LEFT, Direction.RIGHT],
   };
 

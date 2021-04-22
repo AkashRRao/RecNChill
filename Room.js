@@ -7,7 +7,7 @@ const roomState = {
   SHOW_MOVIES: 'SHOW_MOVIES',
 };
 
-const PYTHON_SERVER_HOSTNAME = 'http://localhost:8000'
+const PYTHON_SERVER_HOSTNAME = 'http://recnchill-python.herokuapp.com';
 
 let socketIdToRoom = new Map();
 let nameToRoom = new Map();
@@ -122,9 +122,7 @@ module.exports = class Room {
       return;
     }
 
-    let result = await axios.get(
-      `${PYTHON_SERVER_HOSTNAME}/initial-feedback/`
-    );
+    let result = await axios.get(`${PYTHON_SERVER_HOSTNAME}/initial-feedback/`);
     result = result.data;
 
     let movieData = new Array();
