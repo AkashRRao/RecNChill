@@ -18,17 +18,6 @@ function joinRoom() {
     room: room,
     color: getRandomColor(),
   });
-  document.getElementById('join-room').remove();
-  let roomName = document.getElementById('room-name');
-  let copyButton = document.createElement('button');
-  document.getElementById('room-help').innerText =
-    'Copy room name and send to your friends!';
-  roomName.readOnly = true;
-  roomName.value = room;
-  copyButton.className = 'btn btn-primary';
-  copyButton.innerText = 'Copy';
-  copyButton.onclick = () => copyRoomInfo();
-  document.getElementById('join-room-form').parentNode.append(copyButton);
 }
 
 function copyRoomInfo() {
@@ -110,11 +99,31 @@ socket.on('room joined', (data, m) => {
   my_id = data.id;
   members = new Map(m);
   updateMembersDOM();
+  const room = members.get(my_id).room;
+  document.getElementById('join-room').remove();
+  let roomName = document.getElementById('room-name');
+  let copyButton = document.createElement('button');
+  document.getElementById('room-help').innerText =
+    'Copy room name and send to your friends!';
+  roomName.readOnly = true;
+  roomName.value = room;
+  copyButton.className = 'btn btn-primary';
+  copyButton.innerText = 'Copy';
+  copyButton.onclick = () => copyRoomInfo();
+  document.getElementById('join-room-form').parentNode.append(copyButton);
   if (members.get(my_id).admin) {
     document.getElementById('start-feedback').hidden = false;
   }
 });
 
+socket.on('error', (message) => {
+  window.createNotification({
+    closeOnClick: true,
+    theme: 'error',
+  })({
+    message: message
+  });
+});
 socket.on('user joined', (data, m) => {
   members = new Map(m);
   updateMembersDOM();
