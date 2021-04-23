@@ -56,8 +56,101 @@
           {{ error }}
         </div>
 
-        <div class="columns is-centered mt-5">
-          <div class="column is-one-third p-5">
+        <div class="columns is-vcentered mt-5 px-5">
+          <div class="column">
+            <div
+              class="box has-background-info has-text-light"
+              style="
+                height: 100%;
+                display: grid;
+                gird-auto-rows: 1fr;
+                grid-template-columns: 1fr 3fr;
+              "
+            >
+              <div
+                class="is-size-1 has-text-centered"
+                style="
+                  align-self: center;
+                  grid-row-start: 1;
+                  grid-column-start: 1;
+                "
+              >
+                <b>1</b>
+              </div>
+              <div
+                class="has-text-centered is-size-5"
+                style="
+                  align-self: center;
+                  grid-row-start: 1;
+                  grid-column-start: 2;
+                "
+              >
+                <b>Join a room with friends</b>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div
+              class="box has-background-danger has-text-light"
+              style="
+                display: grid;
+                grid-template-columns: 1fr 3fr;
+                height: 100%;
+              "
+            >
+              <div
+                class="is-size-1 has-text-centered"
+                style="
+                  align-self: center;
+                  grid-row-start: 1;
+                  grid-column-start: 1;
+                "
+              >
+                <b>2</b>
+              </div>
+              <div
+                class="has-text-centered is-size-5"
+                style="
+                  align-self: center;
+                  grid-row-start: 1;
+                  grid-column-start: 2;
+                "
+              >
+                <b>Swipe on movies you want to watch</b>
+              </div>
+            </div>
+          </div>
+          <div class="column" style="height: 100%">
+            <div
+              class="box has-background-success has-text-light"
+              style="display: grid; grid-template-columns: 1fr 3fr"
+            >
+              <div
+                class="is-size-1 has-text-centered"
+                style="
+                  align-self: center;
+                  grid-row-start: 1;
+                  grid-column-start: 1;
+                "
+              >
+                <b>3</b>
+              </div>
+              <div
+                class="has-text-centered is-size-5"
+                style="
+                  align-self: center;
+                  grid-row-start: 1;
+                  grid-column-start: 2;
+                "
+              >
+                <b>Get custom movie recs for the entire room!</b>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-one-third px-5">
             <h2 class="title">ROOM</h2>
             <div class="box has-background-dark has-text-light">
               <div class="field">
@@ -110,14 +203,14 @@
               <label class="label">User Submission Progress</label>
               <progress
                 id="progress-bar"
-                class="progress"
+                class="progress is-info is-small"
                 value="0"
                 max="100"
               ></progress>
             </div>
           </div>
 
-          <div class="column is-two-thirds p-5">
+          <div class="column is-two-thirds px-5">
             <div id="swipe-container" hidden>
               <h2 class="title">
                 SWIPE MOVIES <strong class="has-text-danger">⇦</strong>
@@ -127,8 +220,20 @@
                 Swipe <strong class="has-text-danger">left</strong> on movies
                 that you don't want to watch and swipe
                 <strong class="has-text-success">right</strong> on movies you
-                want to watch.
+                want to watch. If you're on a device without a touch screen you
+                can drag movies into the
+                <strong class="has-text-danger">No Watch :(</strong> or
+                <strong class="has-text-success">Let's Watch!</strong> pile.
               </p>
+              <div id="movies-completed-div" class="block">
+                <label class="label">Movies completed</label>
+                <progress
+                  id="movies-completed"
+                  class="progress is-info is-small"
+                  value="0"
+                  max="100"
+                ></progress>
+              </div>
               <div
                 class="box has-background-dark"
                 style="

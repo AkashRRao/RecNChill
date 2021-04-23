@@ -55,7 +55,7 @@ function submitMovieFeedback() {
   ).map((id) => Number(id));
   socket.emit('submit feedback', feedbackData);
   let submitFeedback = document.getElementById('submit-feedback');
-  submitFeedback.innerText = 'Loading...';
+  submitFeedback.innerText = 'Waiting...';
   submitFeedback.disabled = true;
 }
 
@@ -80,9 +80,18 @@ const updateMembersDOM = () => {
   } users in room ${members.entries().next().value[1].room}:`;
   document.querySelector('.members-list').innerHTML = '';
   for (const member of members) {
-    document
-      .querySelector('.members-list')
-      .appendChild(createMemberElement(member[1]));
+    if (member[1].id === my_id) {
+      document
+        .querySelector('.members-list')
+        .insertBefore(
+          createMemberElement(member[1]),
+          document.querySelector('.members-list').firstChild
+        );
+    } else {
+      document
+        .querySelector('.members-list')
+        .appendChild(createMemberElement(member[1]));
+    }
   }
 };
 
@@ -105,6 +114,7 @@ socket.on('user joined', (data, m) => {
 
 socket.on('feedback time', (data) => {
   document.getElementById('start-feedback-button').remove();
+  data.sort(() => Math.random() - 0.5);
   vueConfig.data.carousels = [];
   data.forEach((movie) => {
     vueConfig.data.carousels.push({
@@ -155,6 +165,14 @@ socket.on('feedback update', (update) => {
   document.getElementById('progress-bar').innerHTML = `${progress * 100}%`;
 });
 
+const updateMoviesCompleted = () => {
+  const progress =
+    (feedbackData.moviesLiked.size + feedbackData.moviesDisliked.size) /
+    vueConfig.data.carousels.length;
+  document.getElementById('movies-completed').value = `${progress * 100}`;
+  document.getElementById('movies-completed').innerHTML = `${progress * 100}%`;
+};
+
 let feedbackData = {
   moviesLiked: new Set(),
   moviesDisliked: new Set(),
@@ -191,6 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
       feedbackData.moviesDisliked.add(movieId);
     }
     cards.add(stack.getCard(e.target));
+    updateMoviesCompleted();
   });
 
   stack.on('throwin', function (e) {
@@ -203,6 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
       feedbackData.moviesDisliked.delete(movieId);
     }
     cards.add(stack.getCard(e.target));
+    updateMoviesCompleted();
   });
 });
 
