@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+h1.title {
+  font-family: 'Bebas Neue', cursive;
+  color: red;
+}
+h2.title {
+  font-family: 'Bebas Neue', cursive;
+}
+
+.my-card {
+  max-height: 32rem;
+  overflow: scroll;
+}
+
+img.darken {
+  filter: brightness(50%);
+}
+
+.my-card img {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+#no-watch {
+  grid-row-start: 1;
+  grid-column-start: 1;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+#submit-div {
+  grid-row-start: 1;
+  grid-column-start: 3;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+#lets-watch {
+  grid-row-start: 1;
+  grid-column-start: 5;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
