@@ -136,12 +136,7 @@ socket.on('movies to watch', (data) => {
 });
 
 socket.on('error', (message) => {
-  window.createNotification({
-    closeOnClick: true,
-    theme: 'error',
-  })({
-    message: message
-  });
+  vueConfig.data.errors.push(message);
 });
 
 socket.on('user left', (data, m) => {
@@ -213,26 +208,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 let vueConfig = {
   data: {
-    carousels: [
-      {
-        title: 'sajsl;dkf',
-        overview:
-          'as;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdf',
-        poster_path:
-          'https://image.tmdb.org/t/p/w500/hagf4LA3FRD2o1wI3LhNzl0t5vo.jpg',
-        backdrop_path:
-          'https://image.tmdb.org/t/p/original/7RIYU3mMHiK0QzMP8hG6IX4Sntl.jpg',
-      },
-      {
-        title: 'sajsl;dkf',
-        overview:
-          'as;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdfas;ldkjfa;lskdf',
-        poster_path:
-          'https://image.tmdb.org/t/p/w500/hagf4LA3FRD2o1wI3LhNzl0t5vo.jpg',
-        backdrop_path:
-          'https://image.tmdb.org/t/p/original/7RIYU3mMHiK0QzMP8hG6IX4Sntl.jpg',
-      },
-    ],
+    carousels: [],
+    errors: [],
   },
   updated() {
     this.$nextTick(function () {
