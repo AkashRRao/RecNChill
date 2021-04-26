@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
+h5 {
+  text-align: center;
+}
+h1 {
+  text-align: center;
+}
+h2 {
+  text-align: center;
+}
+
 h1.title {
   font-family: 'Bebas Neue', cursive;
   color: red;
